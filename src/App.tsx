@@ -1,13 +1,49 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './App.css';
 import Login from './Components/Login';
+import Main from './Components/Main';
+import { AppState } from './redux/types';
+import { requestAccessTokenValidation } from './redux/ducks/session/token';
+import { logoutAndResetApplication, reInitApplication } from './redux/ducks/application';
 
-function App() {
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+
+function App(props: Props) {
+  //@ts-ignore
+  console.log(props);
+  const { hasAccessToken } = props;
   return (
     <div className="App">
-      <Login />
+    <>
+      {!hasAccessToken && <Login />}
+      {hasAccessToken && <Main />}
+    </>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state: AppState) {
+  return {
+    accessToken: state.session.accessToken,
+    hasAccessToken: !!state.session.accessToken
+  };
+}
+
+function mapDispatchToProps(dispatch: any) {
+  return {
+    validateAccessToken: (accessToken: string | undefined, loginOnSuccess: boolean, logoutOnFail: boolean) => {
+      return dispatch(requestAccessTokenValidation(accessToken!)).then((accessTokenIsValid: boolean) => {
+        if (accessTokenIsValid) {
+          if (loginOnSuccess) {
+            dispatch(reInitApplication());
+          }
+        } else if (logoutOnFail) {
+          dispatch(logoutAndResetApplication());
+        }
+      });
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

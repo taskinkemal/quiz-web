@@ -1,9 +1,15 @@
 import React, { ReactElement, useState } from 'react';
+import { connect } from 'react-redux';
 import styles from './Login.module.scss';
 import TextBox from '../../Controls/TextBox';
 import Button from '../../Controls/Button';
+import { login } from '../../redux/ducks/application';
+import { AppState } from '../../redux/types';
 
-  function Login(): ReactElement {
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+
+
+  function Login(props: Props): ReactElement {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,7 +23,7 @@ import Button from '../../Controls/Button';
     };
 
     const handleSignIn = (): void => {
-
+        props.login(email, password, true);
     };
 
     return (
@@ -51,4 +57,17 @@ import Button from '../../Controls/Button';
     );
   }
 
-export default Login;
+  const mapDispatchToProps = (dispatch: any) => ({
+    login: (email: string, password: string, rememberMe: boolean) => {
+      return dispatch(login(email, password, rememberMe));
+    }
+  });
+  
+  const mapStateToProps = (state: AppState) => {
+    const { application } = state;
+    return {
+      isInitialized: application.initialized
+    };
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Login);

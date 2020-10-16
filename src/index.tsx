@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
+import configureStore from './redux/configureStore';
+import { initApplication } from './redux/ducks/application';
 import * as serviceWorker from './serviceWorker';
 
+const store = configureStore();
+
+function initialize(store: any): void {
+  store.dispatch(initApplication());
+}
+
+initialize(store);
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
   document.getElementById('root')
 );
 
