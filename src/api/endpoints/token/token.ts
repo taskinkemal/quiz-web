@@ -21,7 +21,7 @@ interface Payload {
 }
 
 export default function (url: string) {
-  const { unauthorized } = request(url);
+  const { unauthorized, authorized } = request(url);
 
   return {
     validate: async (accessToken: string): Promise<boolean> => {
@@ -38,8 +38,7 @@ export default function (url: string) {
       return response.data.token;
     },
     delete: async (accessToken: string): Promise<boolean> => {
-      const endpoint = `Token?token=${accessToken}`;
-      const response: Response<boolean> = await unauthorized.delete<boolean>(endpoint);
+      const response: Response<boolean> = await authorized(accessToken).delete<boolean>('Token');
       return response.data;
     }
   };

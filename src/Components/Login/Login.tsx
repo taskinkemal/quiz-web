@@ -11,8 +11,8 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
 
   function Login(props: Props): ReactElement {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('kemal.n.taskin@gmail.com');
+    const [password, setPassword] = useState('kemal123');
   
     const handleEmailChange = (value: string): void => {
         setEmail(value);

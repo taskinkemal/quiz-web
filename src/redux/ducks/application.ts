@@ -24,6 +24,8 @@ import {
 
 import { serviceEndpoint } from '../../api/configuration';
 import LocalStorage from '../../api/LocalStorage';
+import { requestUser } from './session/user';
+import { requestQuizzes } from './session/quiz';
 
 // Actions
 export const RESET_APPLICATION_STATE = 'api/application/RESET_APPLICATION_STATE';
@@ -113,9 +115,11 @@ export function reInitApplication(): AsyncAction {
           throw new Error('The access token is invalid or expired.');
         }
       })
-      /*.then(() => dispatch(requestUser()))
-      .then(async () => {
-        const { user } = getState().session;
+      .then(() => dispatch(requestUser()))
+      .then(() => dispatch(requestQuizzes()))
+      /*.then(async () => {
+        const { quiz } = getState().session;
+        alert(quiz[2].intro);
       })*/
       .catch(() => {
         LocalStorage.reset();

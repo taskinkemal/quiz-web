@@ -14,6 +14,8 @@
  ******************************************************************************************************************* */
 
 import token from './token';
+import users from './users';
+import quizzes from './quizzes';
 
 function unauthorized(url: string) {
   return {
@@ -25,13 +27,8 @@ function unauthorized(url: string) {
 function authorized(url: string, accessToken: string) {
   return {
     ...unauthorized(url),
-    /*
-    notification: notification(url, accessToken),
-    organizations: organizations(url, accessToken),
     users: users(url, accessToken),
-    productInformation: productInformation(url, accessToken)
-
-*/
+    quizzes: quizzes(url, accessToken)
   };
 }
 

@@ -10,8 +10,6 @@ import { logoutAndResetApplication, reInitApplication } from './redux/ducks/appl
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 function App(props: Props) {
-  //@ts-ignore
-  console.log(props);
   const { hasAccessToken } = props;
   return (
     <div className="App">

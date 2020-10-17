@@ -1,23 +1,47 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/types';
+import QuizList from '../QuizList';
+import Button from '../../Controls/Button';
+import { logoutAndResetApplication } from '../../redux/ducks/application';
 
-  function Main(): ReactElement {
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+
+  function Main(props: Props): ReactElement {
+
+    const handleLogout = (): void => {
+        props.logout();
+    };
 
     return (
         <div>
-        welcome to Quiz Maker.
-</div>
+            <div>
+                <Button
+                    value="Logout"
+                    onClick={handleLogout}
+                />
+            </div>
+            <div>
+                Welcome to Quiz Maker {props.user.firstName}
+            </div>
+            <QuizList quizzes={props.quizzes} />
+        </div>
     );
   }
 
   const mapDispatchToProps = (dispatch: any) => ({
+    logout: () => {
+        return dispatch(logoutAndResetApplication());
+      }
   });
   
   const mapStateToProps = (state: AppState) => {
-    const { application } = state;
+    const { application, session } = state;
+    const { user, quiz } = session;
     return {
-      isInitialized: application.initialized
+      isInitialized: application.initialized,
+      user: user,
+      quizzes: quiz
     };
   };
   
