@@ -1,8 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import styles from './Login.module.scss';
-import TextBox from '../../Controls/TextBox';
-import Button from '../../Controls/Button';
+import { TextBox, Button } from '../../Controls';
 import { login } from '../../redux/ducks/application';
 import { AppState } from '../../redux/types';
 

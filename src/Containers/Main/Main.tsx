@@ -1,9 +1,14 @@
 import React, { ReactElement } from 'react';
+import {
+    Route,
+    Link,
+    HashRouter
+  } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/types';
-import QuizList from '../QuizList';
-import Button from '../../Controls/Button';
+import { Button } from '../../Controls';
 import { logoutAndResetApplication } from '../../redux/ducks/application';
+import { About, QuizList, Home } from '..';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
@@ -14,18 +19,31 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
     };
 
     return (
+        <HashRouter>
         <div>
-            <div>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/quizzes">Quizzes</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+          </ul>
+        </div>
+        <div>
                 <Button
                     value="Logout"
                     onClick={handleLogout}
                 />
-            </div>
-            <div>
-                Welcome to Quiz Maker {props.user.firstName}
-            </div>
-            <QuizList quizzes={props.quizzes} />
         </div>
+            <Route path="/" component={Home} exact push />
+            <Route path="/" component={Home} exact push />
+          <Route path="/quizzes" component={QuizList} />
+          <Route path="/about" component={About} />
+      </HashRouter>
     );
   }
 

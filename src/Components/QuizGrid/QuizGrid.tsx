@@ -2,12 +2,12 @@ import React, { ReactElement } from 'react';
 import { Quiz, QuizMap } from '../../api';
 import QuizRow from '../QuizRow';
 
-interface QuizListProps {
+interface QuizGridProps {
 
     quizzes: QuizMap;
 }
 
-function QuizList(props: QuizListProps): ReactElement {
+function QuizGrid(props: QuizGridProps): ReactElement {
 
     const { quizzes } = props;
     
@@ -20,4 +20,4 @@ function QuizList(props: QuizListProps): ReactElement {
     );
   }
 
-  export default QuizList;
+  export default QuizGrid;

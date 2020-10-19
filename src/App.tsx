@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import Login from './Components/Login';
-import Main from './Components/Main';
+import { Login, Main } from './Containers';
 import { AppState } from './redux/types';
 import { requestAccessTokenValidation } from './redux/ducks/session/token';
 import { logoutAndResetApplication, reInitApplication } from './redux/ducks/application';
