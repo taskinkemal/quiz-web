@@ -13,6 +13,9 @@ export interface Quiz {
     readonly shuffleOptions: boolean;
     readonly passScore?: number;
     readonly repeatable: boolean;
+    readonly showResults?: Date;
+    readonly availableFrom?: Date;
+    readonly availableTo?: Date;
   }
 
 export type QuizStatus = 'Inactive' | 'Current' | 'Draft';

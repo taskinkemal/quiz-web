@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, ReactElement } from 'react';
 import { Form } from 'react-bootstrap';
 
-export interface TextBoxProps {
+export interface TextAreaProps {
     value: string;
     rows: number;
     onChange?: (value: string) => void;
@@ -12,7 +12,7 @@ export interface TextBoxProps {
     maxLength?: number;
   }
   
-  function TextArea(props: TextBoxProps): ReactElement {
+  function TextArea(props: TextAreaProps): ReactElement {
     const {
       placeholder,
       value,

@@ -7,6 +7,7 @@ import configureStore from './redux/configureStore';
 import { initApplication } from './redux/ducks/application';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 const store = configureStore();
 
