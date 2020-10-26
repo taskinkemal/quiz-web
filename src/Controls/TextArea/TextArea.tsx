@@ -3,18 +3,17 @@ import { Form } from 'react-bootstrap';
 
 export interface TextBoxProps {
     value: string;
+    rows: number;
     onChange?: (value: string) => void;
     placeholder?: string;
-    isPassword?: boolean;
     autoFocus?: boolean;
     isDisabled?: boolean;
     readOnly?: boolean;
     maxLength?: number;
   }
   
-  function TextBox(props: TextBoxProps): ReactElement {
+  function TextArea(props: TextBoxProps): ReactElement {
     const {
-      isPassword,
       placeholder,
       value,
       onChange,
@@ -22,9 +21,10 @@ export interface TextBoxProps {
       autoFocus,
       maxLength,
       readOnly,
+      rows,
       ...rest
     } = props;
-    const inputReference = useRef<HTMLInputElement>(null);
+    const inputReference = useRef<HTMLTextAreaElement>(null);
   
     useEffect(() => {
       if (autoFocus && inputReference && inputReference.current) {
@@ -34,9 +34,10 @@ export interface TextBoxProps {
   
     return (
       <Form.Control
+      as="textarea"
+      rows={rows}
       ref={inputReference}
       {...rest}
-      type={isPassword ? 'password' : 'text'}
       placeholder={placeholder}
       onChange={e => { if (onChange) onChange(e.currentTarget.value); }}
       disabled={isDisabled}
@@ -47,4 +48,4 @@ export interface TextBoxProps {
     );
   }
 
-export default TextBox;
+export default TextArea;

@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 import { Quiz } from '../../api';
 import { Row, Col } from 'react-bootstrap';
-import { Link, Route } from 'react-router-dom';
-import { QuizEdit } from '../../Containers';
+import { Link } from 'react-router-dom';
 
 interface QuizRowProps {
     quiz: Quiz;
@@ -19,7 +18,6 @@ function QuizRow(props: QuizRowProps): ReactElement {
                 <Col>{quiz.intro}</Col>
                 <Col><Link to={`/Quizzes/${quiz.id}`}>Edit</Link></Col>
             </Row>
-            <Route path={`/Quizzes/:quizId`} component={QuizEdit}/>
         </>
     );
   }

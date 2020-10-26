@@ -9,21 +9,24 @@ import { logoutAndResetApplication, reInitApplication } from './redux/ducks/appl
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
 function App(props: Props) {
-  const { hasAccessToken } = props;
+  const { isInitialized, hasAccessToken } = props;
   return (
     <div className="App">
     <>
-      {!hasAccessToken && <Login />}
-      {hasAccessToken && <Main />}
+      {!isInitialized && <div>Initializing...</div>}
+      {isInitialized && !hasAccessToken && <Login />}
+      {isInitialized && hasAccessToken && <Main />}
     </>
     </div>
   );
 }
 
 function mapStateToProps(state: AppState) {
+  const { application, session } = state;
   return {
-    accessToken: state.session.accessToken,
-    hasAccessToken: !!state.session.accessToken
+    isInitialized: application.initialized,
+    accessToken: session.accessToken,
+    hasAccessToken: !!session.accessToken
   };
 }
 

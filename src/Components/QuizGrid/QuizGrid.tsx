@@ -15,7 +15,7 @@ function QuizGrid(props: QuizGridProps): ReactElement {
     return (
       <Container fluid>
           {Object.values(quizzes).map((quiz: Quiz) => (
-            <QuizRow quiz={quiz} />
+            <QuizRow quiz={quiz} key={quiz.id} />
         ))}
       </Container>
     );

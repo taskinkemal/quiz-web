@@ -18,10 +18,9 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
   });
   
   const mapStateToProps = (state: AppState) => {
-    const { application, session } = state;
+    const { session } = state;
     const { user, quiz } = session;
     return {
-      isInitialized: application.initialized,
       user: user,
       quizzes: quiz
     };
