@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, ReactElement } from 'react';
 import styles from './TextBox.module.scss';
+import { Form } from 'react-bootstrap';
 
 export interface TextBoxProps {
     value: string;
@@ -33,18 +34,18 @@ export interface TextBoxProps {
     }, [autoFocus, inputReference]);
   
     return (
-        <input
-          ref={inputReference}
-          className={styles.textBox}
-          {...rest}
-          type={isPassword ? 'password' : 'text'}
-          placeholder={placeholder}
-          value={value}
-          onChange={e => { if (onChange) onChange(e.currentTarget.value); }}
-          disabled={isDisabled}
-          maxLength={maxLength}
-          readOnly={readOnly}
-        />
+      <Form.Control
+      ref={inputReference}
+      className={styles.textBox}
+      {...rest}
+      type={isPassword ? 'password' : 'text'}
+      placeholder={placeholder}
+      onChange={e => { if (onChange) onChange(e.currentTarget.value); }}
+      disabled={isDisabled}
+      maxLength={maxLength}
+      readOnly={readOnly}
+      value={value}
+      />
     );
   }
 

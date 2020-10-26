@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import styles from './Button.module.scss';
+import { Button as BootstrapButton } from 'react-bootstrap';
 
 export interface ButtonProps {
     value: string;
     onClick: () => void;
     isDisabled?: boolean;
-    readOnly?: boolean;
   }
   
   function Button(props: ButtonProps): ReactElement {
@@ -13,20 +13,16 @@ export interface ButtonProps {
       value,
       onClick,
       isDisabled,
-      readOnly,
       ...rest
     } = props;
 
     return (
-        <input
-          className={styles.button}
-          {...rest}
-          value={value}
-          onClick={onClick}
-          disabled={isDisabled}
-          readOnly={readOnly}
-          type="button"
-        />
+      <BootstrapButton
+        className={styles.button}
+        {...rest}
+        onClick={onClick}
+        disabled={isDisabled}
+    >{value}</BootstrapButton>
     );
   }
 

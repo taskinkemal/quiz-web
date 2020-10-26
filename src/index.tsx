@@ -6,6 +6,7 @@ import App from './App';
 import configureStore from './redux/configureStore';
 import { initApplication } from './redux/ducks/application';
 import * as serviceWorker from './serviceWorker';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const store = configureStore();
 

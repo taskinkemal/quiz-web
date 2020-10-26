@@ -18,3 +18,12 @@ code {
 #root {
   height:100%;
 }
+
+div.appWrapper {
+  margin-top: 40px;
+}
+
+div.row {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}

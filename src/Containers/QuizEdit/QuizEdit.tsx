@@ -1,30 +1,17 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/types';
-import Button from '../../Controls/Button';
 import { logoutAndResetApplication } from '../../redux/ducks/application';
-import { QuizGrid } from '../../Components';
+import { match } from 'react-router';
 
-type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & match;
 
   function QuizEdit(props: Props): ReactElement {
 
-    const handleLogout = (): void => {
-        props.logout();
-    };
-
+    console.log(props);
     return (
         <div>
-            <div>
-                <Button
-                    value="Logout"
-                    onClick={handleLogout}
-                />
-            </div>
-            <div>
-                Welcome to Quiz Maker {props.user.firstName}
-            </div>
-            <QuizGrid quizzes={props.quizzes} />
+            Quiz Edit TODO
         </div>
     );
   }
