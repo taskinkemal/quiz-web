@@ -8,6 +8,18 @@ export default function (url: string, accessToken: string) {
         .authorized(accessToken)
         .get<Quiz[]>('Admin/Quizzes');
       return toNumberMap(Object.values(response.data));
-    }
+    },
+    insert: async (data: Quiz): Promise<number> => {
+      const response: Response<number> = await request(url)
+        .authorized(accessToken)
+        .put<number>('Admin/Quizzes', data);
+      return response.data;
+    },
+    update: async (data: Quiz): Promise<number> => {
+      const response: Response<number> = await request(url)
+        .authorized(accessToken)
+        .put<number>('Admin/Quizzes/' + data.id, data);
+      return response.data;
+    },
   };
 }

@@ -1,5 +1,7 @@
 import { AsyncAction, Action } from '../../types';
-import api, { QuizMap } from '../../../api';
+import api, { QuizMap, Quiz } from '../../../api';
+import { setHttpRequestRunning } from '../application';
+import { throwGlobalError, GlobalErrorType } from '../errors/errors';
 
 // Actions
 export const RECEIVE_QUIZZES = 'api/session/user/RECEIVE_QUIZZES';
@@ -38,5 +40,36 @@ export function requestQuizzes(): AsyncAction<any> {
       dispatch(receiveQuizzes(response));
       return response;
     });
+  };
+}
+
+export function saveQuiz(quiz: Quiz): AsyncAction {
+  return (dispatch, getState) => {
+    const { session, application } = getState();
+    const { apiEndpoint } = application;
+
+    if (!session.accessToken) {
+      return;
+    }
+
+    const request = api(apiEndpoint).authorize(session.accessToken);
+
+    dispatch(setHttpRequestRunning(true));
+
+    let promise: undefined | Promise<any>;
+
+    if (quiz.id <= 0) {
+      promise = request.quizzes.insert(quiz);
+    } else {
+      promise = request.quizzes.update(quiz);
+    }
+
+    return promise
+      .then(() => dispatch(requestQuizzes()))
+      .catch((error) => {
+        dispatch(throwGlobalError(GlobalErrorType.SaveQuiz));
+        throw error;
+      })
+      .finally(() => dispatch(setHttpRequestRunning(false)));
   };
 }

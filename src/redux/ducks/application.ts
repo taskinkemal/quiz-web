@@ -15,20 +15,24 @@ import { requestQuizzes } from './session/quiz';
 // Actions
 export const RESET_APPLICATION_STATE = 'api/application/RESET_APPLICATION_STATE';
 const SET_APPLICATION_INITIALIZED = 'api/application/SET_APPLICATION_INITIALIZED';
+const SET_HTTP_REQUEST_RUNNING = 'api/application/SET_HTTP_REQUEST_RUNNING';
 
 export type ApplicationAction =
   | Action<typeof RESET_APPLICATION_STATE>
-  | Action<typeof SET_APPLICATION_INITIALIZED, boolean>;
+  | Action<typeof SET_APPLICATION_INITIALIZED, boolean>
+  | Action<typeof SET_HTTP_REQUEST_RUNNING, boolean>;
 
 interface State {
   initialized: boolean;
   apiEndpoint: string;
+  httpRequestRunning: boolean;
 }
 
 // Reducer
 const initialState: State = {
   initialized: false,
-  apiEndpoint: serviceEndpoint || ''
+  apiEndpoint: serviceEndpoint || '',
+  httpRequestRunning: false
 };
 
 export default function reducer(state: State = initialState, action: ApplicationAction): State {
@@ -37,6 +41,11 @@ export default function reducer(state: State = initialState, action: Application
       return {
         ...state,
         initialized: action.payload
+      };
+    case SET_HTTP_REQUEST_RUNNING:
+      return {
+        ...state,
+        httpRequestRunning: action.payload
       };
     default:
       return state;
@@ -55,6 +64,13 @@ export function setInitialized(initialized: boolean): ApplicationAction {
   return {
     type: SET_APPLICATION_INITIALIZED,
     payload: initialized
+  };
+}
+
+export function setHttpRequestRunning(isRunning: boolean): ApplicationAction {
+  return {
+    type: SET_HTTP_REQUEST_RUNNING,
+    payload: isRunning
   };
 }
 
