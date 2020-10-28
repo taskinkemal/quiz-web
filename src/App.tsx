@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import { Login, Main } from './Containers';
+import { Login, Main, Initializing } from './Containers';
 import { AppState } from './redux/types';
 import { requestAccessTokenValidation } from './redux/ducks/session/token';
 import { logoutAndResetApplication, reInitApplication } from './redux/ducks/application';
@@ -13,7 +13,7 @@ function App(props: Props) {
   return (
     <div className="App">
     <>
-      {!isInitialized && <div>Initializing...</div>}
+      {!isInitialized && <Initializing />}
       {isInitialized && !hasAccessToken && <Login />}
       {isInitialized && hasAccessToken && <Main />}
     </>

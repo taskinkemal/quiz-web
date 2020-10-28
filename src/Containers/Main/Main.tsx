@@ -9,19 +9,34 @@ import { NavBar } from '../../Components';
 import { logoutAndResetApplication } from '../../redux/ducks/application';
 import { About, QuizList, QuizEdit, Home } from '..';
 import { Container } from 'react-bootstrap';
+import { Alert } from '../../Controls';
+import { resetGlobalMessage } from '../../redux/ducks/globalMessages/globalMessages';
 
 type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
   function Main(props: Props): ReactElement {
 
+    const { globalMessage } = props;
+
     const handleLogout = (): void => {
         props.logout();
+    };
+
+    const handleGlobalMessageClose = (): void => {
+      props.closeGlobalMessage();
     };
 
     return (
         <HashRouter>
           <NavBar onLogout={handleLogout} />
           <Container className="appWrapper">
+          {globalMessage &&
+              <Alert
+                message={globalMessage.message ? globalMessage.message : "An error occured." }
+                variant={globalMessage.errorType ? "danger" : "success"}
+                onClose={handleGlobalMessageClose}
+              />
+          }
             <Route path="/" component={Home} exact push />
             <Route path="/quizzes" component={QuizList} exact />
             <Route path={`/Quizzes/:quizId`} component={QuizEdit} />
@@ -34,15 +49,19 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
   const mapDispatchToProps = (dispatch: any) => ({
     logout: () => {
         return dispatch(logoutAndResetApplication());
-      }
+      },
+    closeGlobalMessage: () => {
+      return dispatch(resetGlobalMessage());
+    }
   });
   
   const mapStateToProps = (state: AppState) => {
-    const { session } = state;
+    const { session, globalMessages } = state;
     const { user, quiz } = session;
     return {
       user: user,
-      quizzes: quiz
+      quizzes: quiz,
+      globalMessage: globalMessages.globalMessage
     };
   };
   

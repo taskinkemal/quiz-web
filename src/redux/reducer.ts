@@ -3,7 +3,7 @@ import accessToken from './ducks/session/token';
 import user from './ducks/session/user';
 import quiz from './ducks/session/quiz';
 import application, { ApplicationAction, RESET_APPLICATION_STATE } from './ducks/application';
-import errors from './ducks/errors/errors';
+import globalMessages from './ducks/globalMessages/globalMessages';
 
 const reducer = combineReducers({
   session: combineReducers({
@@ -12,7 +12,7 @@ const reducer = combineReducers({
     quiz
   }),
   application,
-  errors
+  globalMessages
 });
 
 export default (state: ReturnType<typeof reducer>, action: ApplicationAction) => {

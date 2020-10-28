@@ -1,7 +1,7 @@
 import { AsyncAction, Action } from '../../types';
 import api, { QuizMap, Quiz } from '../../../api';
 import { setHttpRequestRunning } from '../application';
-import { throwGlobalError, GlobalErrorType } from '../errors/errors';
+import { throwGlobalError, GlobalErrorType, showGlobalMessage } from '../globalMessages/globalMessages';
 
 // Actions
 export const RECEIVE_QUIZZES = 'api/session/user/RECEIVE_QUIZZES';
@@ -70,6 +70,7 @@ export function saveQuiz(quiz: Quiz): AsyncAction {
         dispatch(throwGlobalError(GlobalErrorType.SaveQuiz));
         throw error;
       })
-      .finally(() => dispatch(setHttpRequestRunning(false)));
+      .finally(() => dispatch(setHttpRequestRunning(false)))
+      .then(() => dispatch(showGlobalMessage("Quiz saved successfully.")));
   };
 }
