@@ -16,7 +16,10 @@ function QuizRow(props: QuizRowProps): ReactElement {
             <Row>
                 <Col>{quiz.title}</Col>
                 <Col>{quiz.intro}</Col>
-                <Col><Link to={`/Quizzes/${quiz.id}`}>Edit</Link></Col>
+                <Col>
+                    <Link to={`/Quizzes/${quiz.id}/Questions`}>Questions</Link>
+                    <Link to={`/Quizzes/${quiz.id}`}>Edit</Link>
+                </Col>
             </Row>
         </>
     );

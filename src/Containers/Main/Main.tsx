@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../redux/types';
 import { NavBar } from '../../Components';
 import { logoutAndResetApplication } from '../../redux/ducks/application';
-import { About, QuizList, QuizEdit, Home } from '..';
+import { About, QuizList, QuizEdit, QuizQuestions, Home } from '..';
 import { Container } from 'react-bootstrap';
 import { Alert } from '../../Controls';
 import { resetGlobalMessage } from '../../redux/ducks/globalMessages/globalMessages';
@@ -39,7 +39,8 @@ type Props = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchT
           }
             <Route path="/" component={Home} exact push />
             <Route path="/quizzes" component={QuizList} exact />
-            <Route path={`/Quizzes/:quizId`} component={QuizEdit} />
+            <Route path={`/Quizzes/:quizId`} component={QuizEdit} exact />
+            <Route path={`/Quizzes/:quizId/Questions`} component={QuizQuestions} />
             <Route path="/about" component={About} />
           </Container>
       </HashRouter>
