@@ -18,7 +18,7 @@ export default function (url: string, accessToken: string) {
     update: async (quizId: number, data: Question): Promise<number> => {
       const response: Response<number> = await request(url)
         .authorized(accessToken)
-        .put<number>(`Admin/Quizzes/${quizId}/Questions/${data.id}`, data);
+        .post<number>(`Admin/Quizzes/${quizId}/Questions/${data.id}`, data);
       return response.data;
     },
     delete: async (quizId: number, questionId: number): Promise<boolean> => {
