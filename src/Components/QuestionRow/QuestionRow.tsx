@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 interface QuestionRowProps {
     quizId: number;
-    question: Question
+    question: Question;
 }
 
 function QuestionRow(props: QuestionRowProps): ReactElement {

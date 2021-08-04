@@ -5,7 +5,7 @@ interface Payload {
   validUntil: string;
 }
 
-export default function (url: string) {
+export default function f(url: string) {
   const { unauthorized, authorized } = request(url);
 
   return {

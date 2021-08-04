@@ -23,4 +23,5 @@ function reset(): void {
   window.localStorage.removeItem(ACCESS_TOKEN);
 }
 
-export default { saveAccessToken, load, reset };
+const obj = { saveAccessToken, load, reset };
+export default obj;

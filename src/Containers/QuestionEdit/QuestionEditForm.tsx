@@ -1,11 +1,12 @@
-import React, { ReactElement, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import React, { ChangeEvent, ReactElement, useState } from 'react';
+import { Form, ButtonGroup, ToggleButton, Container } from 'react-bootstrap';
 import Select from 'react-select';
 import { TextArea, Button } from '../../Controls';
-import { Question } from '../../api';
+import { Question, OptionMap, Option } from '../../api';
 
 interface QuestionEditFormProps {
     question: Question,
+    options: OptionMap,
     quizId: number,
     onSave: (quizId: number, q: Question) => void;
 };
@@ -14,10 +15,11 @@ interface LevelOption { value: string, label: string, color: string }
 
 function QuestionEditForm(props: QuestionEditFormProps): ReactElement {
 
-    const { question, quizId, onSave } = props;
+    const { question, options, quizId, onSave } = props;
 
     const [body, setBody] = useState(question.body);
     const [level, setLevel] = useState(question.level);
+    const [questionType, setQuestionType] = useState(question.type);
 
     const levelOptions : ReadonlyArray<LevelOption> = [
       { value: '1', label: 'Very easy', color: '#008000' },
@@ -71,13 +73,23 @@ function QuestionEditForm(props: QuestionEditFormProps): ReactElement {
       }
     }
 
+    const onQuestionTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+
+      if (e.currentTarget.value === "MultiSelect") {
+        setQuestionType("MultiSelect");
+      } else if (e.currentTarget.value === "MultiSelectMultiOptions") {
+        setQuestionType("MultiSelectMultiOptions");
+      }
+    }
+
     const handleSave = (): void => {
       
       let updatedQuestion: Question = {
         id: question.id,
         body: body,
         level: level,
-        type: question.type
+        type: question.type,
+        optionIds: question.optionIds
       };
 
       onSave(quizId, updatedQuestion);
@@ -99,6 +111,33 @@ function QuestionEditForm(props: QuestionEditFormProps): ReactElement {
               styles={colourStyles}
               defaultValue={levelOptions[level-1]}
               onChange={onLevelChange}/>
+            <ButtonGroup className="mb-2">
+              <ToggleButton
+                  type="radio"
+                  variant="secondary"
+                  name="radio"
+                  value="MultiSelect"
+                  checked={questionType === "MultiSelect"}
+                  onChange={onQuestionTypeChange}
+                >
+                Multi Select
+              </ToggleButton>
+              <ToggleButton
+                  type="radio"
+                  variant="secondary"
+                  name="radio"
+                  value="MultiSelectMultiOptions"
+                  checked={questionType === "MultiSelectMultiOptions"}
+                  onChange={onQuestionTypeChange}
+                >
+                Multi Select - Multi Options
+              </ToggleButton>
+          </ButtonGroup>
+          <Container fluid>
+              {Object.values(options).map((option: Option) => (
+                option.body
+            ))}
+          </Container>
           </Form.Group>
           
           <Button

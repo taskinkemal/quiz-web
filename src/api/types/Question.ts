@@ -5,6 +5,7 @@ export interface Question {
     readonly body: string;
     readonly level: number;
     readonly type: QuestionType;
+    readonly optionIds: ReadonlyArray<number>;
   }
 
 export type QuestionType = 'MultiSelect' | 'MultiSelectMultiOptions';

@@ -1,7 +1,7 @@
 import { request, Response } from '../../request';
 import { QuestionMap, Question, toNumberMap } from '../../types';
 
-export default function (url: string, accessToken: string) {
+export default function f(url: string, accessToken: string) {
   return {
     get: async (quizId: number): Promise<QuestionMap> => {
       const response: Response<Question[]> = await request(url)
